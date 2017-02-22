@@ -12,6 +12,7 @@ namespace MartenExperiments
         {
         }
 
+        //[Fact]
         [Fact(Skip = "Will Delete Data")]
         public void Clear_things_away()
         {

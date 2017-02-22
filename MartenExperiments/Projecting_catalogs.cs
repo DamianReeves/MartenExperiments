@@ -27,12 +27,20 @@ namespace MartenExperiments
             {
                 _.AutoCreateSchemaObjects = AutoCreate.All;
                 _.Events.InlineProjections.Add(new BasicCatalogViewProjection());
+                //_.Events.InlineProjections.AggregateStreamsWith<BasicCatalogView>();
             }))
             {
+                // Create catalog
                 var catalogAggr = CatalogAggregate.Create(catalogName, catalogId);
+
+
+
+
                 using (var session = store.OpenSession())
                 {
                     var events = catalogAggr.GetUncommittedChanges().Cast<object>().ToArray();
+
+
                     session.Events.StartStream<CatalogAggregate>(catalogAggr.Id, events);
 
                     await session.SaveChangesAsync();

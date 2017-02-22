@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MartenExperiments.Models
 {
@@ -6,5 +7,11 @@ namespace MartenExperiments.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-    }
+
+        public void Apply(CatalogAggregate.CatalogCreated e)
+        {
+            Id = e.Id;
+            Name = e.Name;
+        }
+    }     
 }

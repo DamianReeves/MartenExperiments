@@ -1,6 +1,4 @@
-using System;
 using FluentAssertions;
-using TwentyTwenty.DomainDriven;
 
 namespace MartenExperiments.Models
 {
@@ -8,22 +6,17 @@ namespace MartenExperiments.Models
     {
         public string Id => Sku.ToString();
         public Sku Sku { get; private set; }
+        public string Title { get; private set; }
+
 
         public void Apply(ProductCreated @event)
         {
             Sku = @event.Sku;
         }
-    }
 
-    public class ProductCreated : IDomainEvent
-    {
-        public Sku Sku { get; }
-
-        public ProductCreated(Sku sku)
+        public void Apply(ProductTitleChanged @event)
         {
-            Sku = sku;
+            Title = @event.Title;
         }
-
-        public Guid Id { get; } = Guid.NewGuid();
     }
 }
