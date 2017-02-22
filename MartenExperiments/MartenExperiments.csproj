@@ -286,10 +286,15 @@
     <Compile Include="Configuration\DocumentStorageRegistry.cs" />
     <Compile Include="Models\BasicCatalogView.cs" />
     <Compile Include="Models\DocumentWithNonPrimitiveId.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductAggregate.cs" />
+    <Compile Include="Models\ProductAggregateFinder.cs" />
+    <Compile Include="Models\Sku.cs" />
     <Compile Include="Primitive_obsession_buster.cs" />
     <Compile Include="Projecting_catalogs.cs" />
     <Compile Include="Models\BasicCatalogViewProjection.cs" />
     <Compile Include="Models\CatalogAggregate.cs" />
+    <Compile Include="Projecting_products_with_aggregate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Purger.cs" />
     <Compile Include="ScenarioFor.cs" />

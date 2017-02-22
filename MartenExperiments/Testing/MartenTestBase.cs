@@ -34,7 +34,7 @@ namespace MartenExperiments.Testing
         protected IDocumentStore CreateDocumentStore(Action<StoreOptions> configure = null, MartenConnectionOptions connectionOptions = null)
         {
             connectionOptions = connectionOptions ?? ConnectionOptions;
-            Output.WriteLine("Using Connection: {0}", connectionOptions.ToConnectionString());
+            //Output.WriteLine("Using Connection: {0}", connectionOptions.ToConnectionString());
             return Marten.DocumentStore.For(options =>
             {
                 options.Connection(connectionOptions.ToConnectionString());
