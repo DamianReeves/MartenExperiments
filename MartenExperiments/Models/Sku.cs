@@ -3,15 +3,28 @@ using System.Text.RegularExpressions;
 using Autofac;
 using Newtonsoft.Json;
 using StringlyTyped;
+using TwentyTwenty.DomainDriven;
 
 namespace MartenExperiments.Models
 {
     [JsonConverter(typeof(SkuConverter))]
-    public class Sku : Stringly
+    public struct Sku 
     {
-        protected override Regex Regex => new Regex(@".*", RegexOptions.Compiled);
+        private static readonly Regex _regex = new Regex(@".*", RegexOptions.Compiled);
+        public string Value { get; }
 
-        public static Sku Parse(string sku)=> new Stringly<Sku>(sku);
+        public Sku(string value)
+        {
+            if (!_regex.IsMatch(value))
+            {
+                throw new ArgumentException($"The provided value ({value}) is in an incorrect format.", nameof(value));
+            }
+            Value = value;
+        }
+        
+        public static Sku Parse(string sku)=> new Sku(sku);
+
+        public override string ToString() => Value;
     }
 
     public class SkuConverter : JsonConverter
@@ -24,10 +37,9 @@ namespace MartenExperiments.Models
             }
             else
             {
-                var sku = value as Sku;
-                if (sku != null)
+                if (value is Sku)
                 {
-                    writer.WriteValue(sku.ToString());
+                    writer.WriteValue(((Sku)value).Value);
                 }
                 else
                 {
@@ -63,5 +75,13 @@ namespace MartenExperiments.Models
 
         public override bool CanConvert(Type objectType) =>
             objectType.IsAssignableTo<Sku>();
+    }
+
+    public class DomainEvent : IDomainEvent
+    {
+        public DomainEvent()
+        {            
+        }
+        public Guid Id { get; set; }
     }
 }

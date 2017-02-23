@@ -10,9 +10,9 @@ namespace MartenExperiments.Models
         {            
         }
 
-        public ProductAggregate(Sku sku)
+        public ProductAggregate(Sku sku, Guid id)
         {
-            ApplyChange(new ProductCreated(sku));
+            ApplyChange(new ProductCreated(sku, id));
             ApplyChange(new ProductTitleChanged(sku.ToString()));
         }
 
@@ -31,12 +31,18 @@ namespace MartenExperiments.Models
 
         protected virtual void Apply(ProductTitleChanged @event)
         {
+            @event.Id = Id;
             // Note we don't always have to change internal state
         }
 
-        public static ProductAggregate Create(Sku sku)
+        public static ProductAggregate Create(Sku sku, Guid? id = null)
         {
-            return new ProductAggregate(sku);
+            return new ProductAggregate(sku, id ?? Guid.NewGuid());
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}:{Id}, {nameof(Sku)}: {Sku}";
         }
     }
 }

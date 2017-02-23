@@ -33,9 +33,10 @@ namespace MartenExperiments
             }))
             {
                 // Make changes to an aggregate
-                var aggregate = ProductAggregate.Create(sku);
+                var aggregate = ProductAggregate.Create(sku, skuGuid);
                 aggregate.ChangeTitle(title);
 
+                Output.WriteLine("Aggregate: {0}", aggregate);
 
                 object[] events = aggregate.GetUncommittedChanges().ToArray();
 
@@ -51,10 +52,12 @@ namespace MartenExperiments
                 {
                     var product = await session.LoadAsync<ProductInfo>(aggregate.Id);
 
+                    Output.WriteLine("Retrieved Product: {0}", product);
+
                     product.ShouldBeEquivalentTo(new
                     {
                         Id = aggregate.Id,
-                        Sku = sku,
+                        Sku = sku.ToString(),
                         Title = title
                     }, opt => opt.ExcludingMissingMembers());
 

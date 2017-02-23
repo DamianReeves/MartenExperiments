@@ -3,19 +3,19 @@ using TwentyTwenty.DomainDriven;
 
 namespace MartenExperiments.Models
 {
-    public class ProductCreated : IDomainEvent
-    {
-        public Sku Sku { get; }
-
-        public ProductCreated(Sku sku)
-        {
+    public class ProductCreated : DomainEvent
+    {                
+        public ProductCreated(Sku sku, Guid id)
+        {            
+            Id = id;
             Sku = sku;
         }
 
-        public Guid Id { get; } = Guid.NewGuid();
+        public Sku Sku { get; }
+
     }
 
-    public class ProductTitleChanged : IDomainEvent
+    public class ProductTitleChanged : DomainEvent
     {
         public string Title { get; }
 
@@ -23,6 +23,5 @@ namespace MartenExperiments.Models
         {
             Title = title;
         }
-        public Guid Id { get; } = Guid.NewGuid();
     }
 }

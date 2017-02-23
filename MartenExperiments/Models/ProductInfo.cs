@@ -16,13 +16,18 @@ namespace MartenExperiments.Models
 
         public void Apply(ProductCreated @event)
         {
-            //Id = @event.Id;
+            Id = @event.Id;
             Sku = @event.Sku.ToString();
         }
 
         public void Apply(ProductTitleChanged @event)
         {
             Title = @event.Title;
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(Sku)}: {Sku}, {nameof(Title)}: {Title}";
         }
     }
 }
