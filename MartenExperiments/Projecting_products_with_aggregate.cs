@@ -50,6 +50,7 @@ namespace MartenExperiments
                 // Retrieve the projected view
                 using (var session = store.OpenSession())
                 {
+                    await Task.Delay(TimeSpan.FromSeconds(3));
                     var product = await session.LoadAsync<ProductInfo>(aggregate.Id);
 
                     Output.WriteLine("Retrieved Product: {0}", product);
@@ -93,7 +94,7 @@ namespace MartenExperiments
                 }
 
                 using (var session = store.OpenSession())
-                {
+                {                    
                     var product = await session.LoadAsync<Product>(sku.ToString());
 
                     product.ShouldBeEquivalentTo(new
